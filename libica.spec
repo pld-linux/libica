@@ -1,13 +1,14 @@
 Summary:	Interface library to the ICA device driver
 Summary(pl.UTF-8):	Biblioteka interfejsu do sterownika urządzenia ICA
 Name:		libica
-Version:	1.3.8
+Version:	1.3.9
 Release:	1
 License:	CPL v0.5
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/opencryptoki/%{name}-%{version}.tar.bz2
-# Source0-md5:	53344af03d23c9261237b1f65aa8b7ca
+# Source0-md5:	ea18b5d03b25ba993c5e33c887441b74
 Patch0:		%{name}-headers.patch
+Patch1:		%{name}-fixes.patch
 URL:		http://opencryptoki.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1:1.9.5
@@ -56,6 +57,7 @@ Statyczna biblioteka ICA.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
@@ -81,6 +83,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc LICENSE
+%attr(755,root,root) %{_bindir}/icainfo
 %attr(755,root,root) %{_libdir}/libica-*.so
 
 %files devel
