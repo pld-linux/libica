@@ -1,0 +1,67 @@
+--- libica-1.3.9/src/sha256.c.orig	2008-03-14 10:57:04.000000000 +0100
++++ libica-1.3.9/src/sha256.c	2008-07-10 23:26:06.363028766 +0200
+@@ -459,7 +459,7 @@ int sha256_update(struct sha256_ctx *ctx
+ 
+ 	for (l = 0; l < 8; l++)
+ 		ctx->h[l] = BETOH32(h_ctx.h[l]);
+-	memset(h_ctx, 0x00, sizeof h_ctx);
++	memset(&h_ctx, 0x00, sizeof h_ctx);
+ #else
+ 	for (l = 0; l < src_len; l += SHA256_BLOCK_LENGTH,
+ 		     src += SHA256_BLOCK_LENGTH)
+--- libica-1.3.9/src/sha512.c.orig	2008-03-14 10:57:04.000000000 +0100
++++ libica-1.3.9/src/sha512.c	2008-07-10 23:26:30.947032957 +0200
+@@ -469,7 +469,7 @@ int sha512_update(struct sha512_ctx *ctx
+ 
+ 	for (l = 0; l < 8; l++)
+ 		ctx->h[l] = BETOH64(h_ctx.h[l]);
+-	memset(h_ctx, 0x00, sizeof h_ctx);
++	memset(&h_ctx, 0x00, sizeof h_ctx);
+ #else
+ 	for (l = 0; l < src_len; l += SHA512_BLOCK_LENGTH,
+ 		     src += SHA512_BLOCK_LENGTH)
+--- libica-1.3.9/src/icainfo.c.orig	2008-03-14 10:57:04.000000000 +0100
++++ libica-1.3.9/src/icainfo.c	2008-07-10 23:33:39.567027928 +0200
+@@ -300,7 +300,9 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <getopt.h>
++#ifdef __s390__
+ #include <s390crypto.h>
++#endif
+ 
+ #define CMD_NAME "icainfo"
+ #define COPYRIGHT "Copyright IBM Corp. 2007."
+@@ -332,7 +334,7 @@ static struct option getopt_long_options
+         {0, 0, 0, 0}
+ };
+ 
+-
++#ifdef __s390__
+ struct crypto_function {
+ 	char *desc;
+ 	int code;
+@@ -355,6 +357,7 @@ struct crypto_function kmc_functions[] =
+ 	{ "PRNG:",	KMC_PRNG },
+ 	{ NULL, 0 }
+ };
++#endif
+ 
+ int main(int argc, char **argv)
+ {
+@@ -387,7 +390,7 @@ int main(int argc, char **argv)
+ 			argv[0], argv[0]);
+ 		exit(1);
+ 	}
+-
++#ifdef __s390__
+ 	if (!quiet)
+ 		printf("The following CP Assist for Cryptographic Function "
+ 		       "(CPACF) operations are\nsupported by libica on this "
+@@ -408,5 +411,6 @@ int main(int argc, char **argv)
+ 		else
+ 			printf("no\n");
+ 	}
++#endif
+ 	return 0;
+ }
