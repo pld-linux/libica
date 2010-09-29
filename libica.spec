@@ -1,12 +1,12 @@
 Summary:	Interface library to the ICA device driver
 Summary(pl.UTF-8):	Biblioteka interfejsu do sterownika urządzenia ICA
 Name:		libica
-Version:	1.3.9
+Version:	1.3.9.1
 Release:	1
 License:	CPL v0.5
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/opencryptoki/%{name}-%{version}.tar.bz2
-# Source0-md5:	ea18b5d03b25ba993c5e33c887441b74
+Source0:	http://downloads.sourceforge.net/opencryptoki/%{name}-%{version}.tar.bz2
+# Source0-md5:	fa82b4cb4549c3d3f567fb89b18fbeff
 Patch0:		%{name}-headers.patch
 Patch1:		%{name}-fixes.patch
 URL:		http://opencryptoki.sourceforge.net/
