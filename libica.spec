@@ -13,6 +13,7 @@ URL:		http://opencryptoki.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1:1.9.5
 BuildRequires:	libtool
+BuildRequires:	sed >= 4.0
 %ifarch s390 s390x
 BuildRequires:	openssl-devel
 %endif
@@ -58,6 +59,7 @@ Statyczna biblioteka ICA.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%{__sed} '/AC_PROG_CXX/d' -i configure.in
 
 %build
 %{__libtoolize}
@@ -65,7 +67,7 @@ Statyczna biblioteka ICA.
 %{__autoconf}
 %{__automake}
 %configure \
-	CPPFLAGS=-I$(pwd)/include
+	CPPFLAGS="-I$(pwd)/include %{rpmcppflags}"
 %{__make}
 
 %install
